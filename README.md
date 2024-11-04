@@ -62,16 +62,15 @@ a fork of it or copy the subset of code you want into a completely new repositor
     - Question currentQuestion  
     - Queue whosTurnIsIt  
       - created after every question is asked  
-    - Player currentPlayer  
+    - Player lastPlayed  
       - determined by who last answered or default (first question) is player 1  
+    - List <Player  players
 
 
   - Quiz  
-    - Instance Variables:  
-      - Player currentPlayer  
+    - Instance Variables:
       - List<Question> setOfQuestions  
-      - String uniqueKey (for user-generated questions)  
-      - int currentScore
+      - String uniqueKey (for user-generated questions)
 
 
 ## Team Members
