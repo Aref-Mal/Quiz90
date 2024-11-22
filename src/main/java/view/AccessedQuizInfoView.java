@@ -1,17 +1,21 @@
 package view;
 
-// TODO: fix imports for checkstyle
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-import app.Constants;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import entity.Quiz;
 import interface_adapter.access_quiz.AccessQuizController;
 import interface_adapter.access_quiz.AccessedQuizInfoState;
 import interface_adapter.access_quiz.AccessedQuizInfoViewModel;
-
-import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * The view for when a quiz has been accessed and its information must be shown.

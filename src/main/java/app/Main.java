@@ -22,7 +22,6 @@ public class Main {
                                             .addAccessedQuizInfoView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
-                                            .addChangePasswordUseCase()
                                             .addLogoutUseCase()
                                             .addLocalMultiplayerUseCase()
                                             .addAccessQuizUseCase()

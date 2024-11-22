@@ -8,6 +8,8 @@ import interface_adapter.signup.SignupViewModel;
 // TODO import statements in the right order
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 

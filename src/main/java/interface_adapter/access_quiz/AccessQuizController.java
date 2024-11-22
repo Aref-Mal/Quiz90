@@ -24,6 +24,9 @@ public class AccessQuizController {
         accessQuizUseCaseInteractor.execute(accessQuizInputData);
     }
 
+    /**
+     * Executes the Switch to Logged In View use case.
+     */
     public void switchToLoggedInView() {
         accessQuizUseCaseInteractor.switchToLoggedInView();
     }

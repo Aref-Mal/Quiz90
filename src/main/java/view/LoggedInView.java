@@ -2,7 +2,6 @@ package view;
 
 import app.Constants;
 import interface_adapter.access_quiz.AccessQuizController;
-import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.local_multiplayer.LocalMultiplayerController;
@@ -24,8 +23,6 @@ import java.beans.PropertyChangeListener;
 public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "logged in";
-    private final LoggedInViewModel loggedInViewModel;
-    private ChangePasswordController changePasswordController;
     private LocalMultiplayerController localMultiplayerController;
     private AccessQuizController accessQuizController;
     private LogoutController logoutController;
@@ -41,11 +38,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JButton normalPlay;
     private final JButton playSharedQuiz;
     private final JButton localMultiplayer;
-    private final JButton changePassword;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
-        this.loggedInViewModel = loggedInViewModel;
-        this.loggedInViewModel.addPropertyChangeListener(this);
+        loggedInViewModel.addPropertyChangeListener(this);
 
         final TitlePanel titlePanel = new TitlePanel(LoggedInViewModel.TITLE_LABEL);
 
@@ -87,6 +82,13 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         buttons1.add(playSharedQuiz);
         buttons1.add(Box.createHorizontalGlue());
 
+        final JPanel errorMessagePanel = new JPanel();
+        sharedQuizKeyErrorField.setText("nothing");
+        sharedQuizKeyErrorField.setMaximumSize(new Dimension(300, 30));
+        errorMessagePanel.setBackground(new Color(0, 71, 171));
+        errorMessagePanel.setLayout(new BoxLayout(errorMessagePanel, BoxLayout.X_AXIS));
+        errorMessagePanel.add(sharedQuizKeyErrorField);
+
         final JPanel buttons2 = new JPanel();
         final JButton createdQuizzes = new JButton("My Created Quizzes");
         localMultiplayer = new JButton("Local Multiplayer");
@@ -102,15 +104,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         buttons2.add(Box.createHorizontalGlue());
 
         final JPanel buttons3 = new JPanel();
-        changePassword = new JButton("Change Password");
         logOut = new JButton("Log Out");
         buttons3.setBackground(new Color(0, 71, 171));
 
         buttons3.setLayout(new BoxLayout(buttons3, BoxLayout.X_AXIS));
         buttons3.add(Box.createHorizontalGlue());
-        buttonsSizeHelper(changePassword);
-        buttons3.add(changePassword);
-        buttons3.add(Box.createHorizontalStrut(200));
         buttonsSizeHelper(logOut);
         buttons3.add(logOut);
         buttons3.add(Box.createHorizontalGlue());
@@ -142,25 +140,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         createdQuizzes.addActionListener(
                 evt -> {
-                    if (evt.getSource().equals(changePassword)) {
+                    if (evt.getSource().equals(createdQuizzes)) {
                         final LoggedInState currentState = loggedInViewModel.getState();
 
 //                        TODO implement myCreatedQuizzesController
 //                        this.myCreatedQuizzesController.execute();
-                    }
-                }
-        );
-
-        changePassword.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(changePassword)) {
-                        final LoggedInState currentState = loggedInViewModel.getState();
-
-                        this.changePasswordController.execute(
-                                currentState.getUsername(),
-                                currentState.getPassword()
-                        );
                     }
                 }
         );
@@ -210,7 +194,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.add(buttons0);
         this.add(Box.createVerticalStrut(20));
         this.add(buttons1);
-        this.add(sharedQuizKeyErrorField);
+        this.add(Box.createVerticalStrut(20));
+        this.add(errorMessagePanel);
         this.add(Box.createVerticalStrut(20));
         this.add(buttons2);
         this.add(Box.createVerticalStrut(20));
@@ -250,26 +235,20 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println(evt.getPropertyName());
         if (evt.getPropertyName().equals("state")) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             username.setText(state.getUsername());
         }
-        else if (evt.getPropertyName().equals("password")) {
-            final LoggedInState state = (LoggedInState) evt.getNewValue();
-            JOptionPane.showMessageDialog(null, "password updated for " + state.getUsername());
-        }
-        else if (evt.getPropertyName().equals("keyError")) {
+        else if (evt.getPropertyName().equals("keyerror")) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             sharedQuizKeyErrorField.setText(state.getQuizKeyError());
+            System.out.println("success");
         }
     }
 
     public String getViewName() {
         return viewName;
-    }
-
-    public void setChangePasswordController(ChangePasswordController changePasswordController) {
-        this.changePasswordController = changePasswordController;
     }
 
     public void setLogoutController(LogoutController logoutController) {
